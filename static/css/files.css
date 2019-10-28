@@ -1,0 +1,35 @@
+.icon-hover:hover {
+    color: #007BFF;
+    cursor: pointer;
+}
+
+.tr-hover:hover {
+    background-color: #F8F9FA;
+}
+
+.bar {
+    background-color: #007fff;
+    width: 0;
+}
+
+.padding {
+    padding-top: 5em;
+}
+
+.padding-1 {
+    padding-top: 1em;
+}
+
+.back {
+    background-color: #fcfcfc;
+}
+
+.danger {
+    color: red;
+}
+
+@media (max-width: 575px) {
+  #buttons {
+      margin-top: 1em!important;
+  }
+}

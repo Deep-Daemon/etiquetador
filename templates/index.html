@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Etiquetador</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+
+
+    <!--<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="jumbotron-narrow.css" rel="stylesheet">-->
+
+    <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet" type="text/css">
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#jsonB').click(function () {
+                $.ajax({
+                    url: '/etiquetador/prueba',
+                    type: 'POST',
+                    success: function (response) {
+                        window.location.href = response;
+                        // console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+        $(function () {
+            $('#jsonObtener').click(function () {
+                window.location.href = '/etiquetador/show_files/json';
+            });
+        });
+
+        $(function () {
+            $('#btnObtenerJsonTemp').click(function () {
+                window.location.href = '/etiquetador/show_files/temp';
+            });
+        });
+
+        $(function () {
+            $('#etiB').click(function () {
+                $.ajax({
+                    url: '/etiquetador/etiquetado',
+                    type: 'POST',
+                    success: function (response) {
+                        window.location.href = response;
+                        // console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+
+        $(function () {
+            $('#etiCon').click(function () {
+                $.ajax({
+                    url: '/etiquetador/etiquetadoCon',
+                    type: 'POST',
+                    success: function (response) {
+                        window.location.href = response;
+                        // console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        $(function () {
+            $('#btnUploadPictures').click(function () {
+                window.location.href = '/etiquetador/file';
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="etiquetador">
+        <h1 class="text-muted titleEt">ETIQUETADOR</h1>
+        <div class="botones">
+            <form>
+                <button id="jsonB" type="button" class="btn btn-primary boton1">Crear JSON
+                </button>
+                <button id="jsonObtener" type="button" class="btn btn-primary boton1">Obtener JSON
+                </button>
+
+                <button id="etiB" type="button" class="btn btn-primary">Etiquetar
+                </button>
+                <button id="etiCon" type="button" class="btn btn-primary">Continuar Etiquetado
+                </button>
+                <button id="btnUploadPictures" type="button" class="btn btn-primary">
+                    Subir Imagenes
+                </button>
+                <button id="btnObtenerJsonTemp" type="button" class="btn btn-primary">
+                    Obtener JSON temp
+                </button>
+            </form>
+        </div>
+        <footer class="footer">
+            <p>&copy; CIC IPN</p>
+        </footer>
+    </div>
+</div>
+
+
+</body>
+
+</html>
