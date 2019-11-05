@@ -1,11 +1,12 @@
 import logging
 import os
 import re
-import zipfile
 
 from flask import current_app as app
+from pyunpack import Archive
 
 ALLOWED_EXTENSIONS = {'zip', 'rar', '7z'}
+logging.getLogger().setLevel(logging.INFO)
 
 
 def verify_exists_file_in_request(request):
@@ -35,23 +36,24 @@ def save_file(filename, file):
     file.save(relative_file_name)
 
 
-def unzip_file_and_remove_after_zip(file_name, relative_current_path):
-    unzip(file_name, relative_current_path=relative_current_path)
-    delete_zip(file_name)
-
-
-def unzip(file_name, relative_current_path):
-    relative_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+def unzip_file_and_remove_zip_after(file_name, relative_current_path):
+    logging.info('trying to extract {}'.format(file_name))
+    _, extension = file_name.split('.')
+    print(extension)
     try:
-        with zipfile.ZipFile(relative_file_name, 'r') as zip_ref:
-            zip_ref.extractall(relative_current_path)
+        extract_file(file_name, relative_current_path)
+        delete_file(file_name)
     except Exception as e:
-        delete_zip(file_name)
+        delete_file(file_name)
         logging.error(e)
-        raise Exception('No es un archivo zip')
+        raise Exception('Archivo corrupto o no soportado')
 
 
-def delete_zip(file_name):
+def extract_file(file_name, relative_current_path):
+    Archive(os.path.join(app.config['UPLOAD_FOLDER'], file_name)).extractall(relative_current_path)
+
+
+def delete_file(file_name):
     relative_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
     os.remove(relative_file_name)
 
@@ -65,6 +67,6 @@ def remove_not_images_from_unzipped_folder(file_name):
         for file in files:
             if not re.search('^([^.])+\\.(gif|jpg|jpeg|png|JPG|PNG|JPEG|GIF)$', file):
                 counter += 1
-                logging.info('*** removing file: {} from directory {}'.format(file_name, subdir))
+                logging.info('*** removing file: {} from directory {}'.format(file, subdir))
                 os.remove(os.path.join(subdir, file))
     logging.info('there have been removed {} files'.format(counter))

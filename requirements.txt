@@ -1,3 +1,4 @@
-werkzeug
 flask
 flask-reverse-proxy-fix
+pyunpack
+patool

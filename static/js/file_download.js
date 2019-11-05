@@ -7,3 +7,7 @@ function submit(file_name, path) {
     $("#path").val(path);
     $('#form').submit();
 }
+
+function backToMain() {
+    window.location = '/etiquetador';
+}
